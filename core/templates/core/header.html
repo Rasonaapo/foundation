@@ -1,0 +1,27 @@
+  {% load static %}
+  <header class="main_menu home_menu fixed-top">
+    <div class="container">
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <a class="navbar-brand" href="{% url 'home' %}">
+          <img src="{% static 'img/jirag_logo.jpeg' %}" alt="logo" style="height:60px;">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#navbarSupportedContent">
+          <span class="ti-menu"></span>
+        </button>
+        <div class="collapse navbar-collapse main-menu-item justify-content-end"
+             id="navbarSupportedContent">
+          <ul class="navbar-nav align-items-center">
+            <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'gallery' %}">Gallery</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'board' %}">Board</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>
+            <li class="d-none d-lg-block">
+              <a class="btn_1" href="#">Learn More</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </header>

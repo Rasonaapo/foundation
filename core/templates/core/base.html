@@ -1,0 +1,118 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- …meta tags… -->
+  
+  <!-- 1️⃣ Bootstrap & Colorlib CSS (keep this order) -->
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+  <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/themify-icons.css' %}">
+  <link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
+  <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+  <link rel="stylesheet" href="{% static 'css/nice-select.css' %}">
+  <link rel="stylesheet" href="{% static 'css/slick.css' %}">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  
+  <style>
+/* Navbar always dark */
+header.main_menu {
+    background-color: rgba(0,0,0,0.8) !important;
+    transition: background-color 0.3s ease-in-out;
+}
+
+/* Banner fix */
+.subpage_banner_part {
+  position: relative;
+  height: 500px; /* adjust to desired height */
+  overflow: hidden;
+  margin-top: 75px; /* precise navbar height */
+}
+
+.banner_overlay {
+  position: absolute; 
+  top: 0; left: 0;
+  width: 100%; 
+  height: 100%;
+  background-color: rgba(0,0,0,0.4); /* Slightly lighter to make the image clearer */
+  z-index: 1;
+}
+
+.banner-bg-img {
+  width: 100%; 
+  height: 100%;
+  object-fit: cover;
+  object-position: center top; /* critical fix */
+  position: absolute; 
+  top: 0; 
+  left: 0;
+}
+
+.banner_inner_text {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.banner_inner_text h2 {
+  color: #ffffff;
+  font-size: 48px;
+  font-weight: 700;
+}
+
+@media(max-width:768px) {
+  .subpage_banner_part { height: 250px; }
+  .banner_inner_text h2 { font-size: 28px; }
+}
+
+  </style>
+
+  <!-- 2️⃣ Your overrides (marquee, banner background, etc.) -->
+  {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+  <!-- 3️⃣ Colorlib Header, made fixed-top -->
+  {% include 'core/header.html' %}
+
+  <!-- 4️⃣ Placeholder blocks -->
+  {% block banner %}{% endblock %}
+  
+  <main>{% block content %}{% endblock %}</main>
+
+
+
+
+  <!-- 5️⃣ Footer & scripts -->
+   <!-- footer part start-->
+  {% include 'core/footer.html' %}
+
+    <script src="{% static 'js/jquery-1.12.1.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+    <script src="{% static 'js/jquery.magnific-popup.js' %}"></script>
+    <!-- swiper js -->
+    <script src="{% static 'js/swiper.min.js' %}"></script>
+    <script src="{% static 'js/wow.min.js' %}"></script>
+    <script src="{% static 'js/jquery.smooth-scroll.min.js' %}"></script>
+    <!-- swiper js -->
+    <script src="{% static 'js/masonry.pkgd.js' %}"></script>
+    <!-- particles js -->
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/jquery.nice-select.min.js' %}"></script>
+    <!-- swiper js -->
+    <script src="{% static 'js/slick.min.js' %}"></script>
+    <script src="{% static 'js/jquery.counterup.min.js' %}"></script>
+    <script src="{% static 'js/waypoints.min.js' %}"></script>
+    <script src="{% static 'js/custom.js' %}"></script>
+    <!-- footer part end-->
+
+
+  {% block extra_js %}{% endblock %}
+</body>
+</html>
