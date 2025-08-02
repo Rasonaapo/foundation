@@ -1,5 +1,5 @@
 from django.views.generic import TemplateView, ListView
-from .models import Mission, Vision, Value
+from .models import Mission, Vision, Value, Introduction
 
 
 class AboutPageView(TemplateView):
@@ -7,6 +7,7 @@ class AboutPageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['introduction'] = Introduction.objects.first()
         context['mission'] = Mission.objects.first()
         context['vision'] = Vision.objects.first()
         context['values'] = Value.objects.all()

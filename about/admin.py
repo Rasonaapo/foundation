@@ -17,6 +17,12 @@ class ValueAdmin(admin.ModelAdmin):
     search_fields = ('name',)
     ordering = ('name',)
 
+class IntroductionAdmin(admin.ModelAdmin):
+    list_display = ('text', 'created_at', 'updated_at')
+    search_fields = ('text',)
+    ordering = ('-created_at',)
+
 admin.site.register(Mission, MissionAdmin)
 admin.site.register(Vision, VisionAdmin)
 admin.site.register(Value, ValueAdmin)
+admin.site.register(Introduction, IntroductionAdmin)

@@ -1,4 +1,5 @@
 {% extends 'core/base.html' %}
+{% load static %}
 
 
 
@@ -6,5 +7,76 @@
   {% include 'core/breadcrumb.html' with page_title='about us' %}
 
 <!-- Your About page content goes here -->
+<!-- about, vision, mission-->
+    <div class="whole-wrap">
+		<div class="container box_1170">
+  
+			<div class="section-top-border">
+				<h3 class="mb-30"></h3>
+				<div class="row">
+					<div class="col-md-4">
+						<div class="single-defination">
+							<h4 class="mb-20">About </h4>
+							<p>{{ introduction.text|default:"This section must come from the Introduction table of About App" }}</p>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="single-defination">
+							<h4 class="mb-20">Vision Statement</h4>
+							<p>{{ vision.text|default:"This section must come from the Vision table of About App" }}</p>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="single-defination">
+							<h4 class="mb-20">Mission Statement</h4>
+							<p>{{ mission.text|default:"This section must come from the Mission table of About App" }}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+        </div>
+    </div>
+
+   <section class="feature_part">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-8">
+                <div class="section_tittle text-center">
+                    <p>Core Values</p>
+                    <h2>What Guides Us</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            {% if values %}
+                {% for value in values %}
+                    <div class="col-lg-5 col-sm-6">
+                        <div class="single_feature">
+                            <div class="single_feature_part">
+                                <div class="d-flex align-items-center">
+                                    {% if value.icon %}
+                                        <img src="{{ value.icon.url }}" alt="{{ value.title }}">
+                                    {% else %}
+                                        <img src="{% static 'img/icon/passion_1.svg' %}" alt="">
+                                    {% endif %}
+                                    <h4>{{ value.name }}</h4>
+                                </div>
+                                <p>{{ value.description }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% if forloop.counter|divisibleby:4 %}
+                        </div><div class="row justify-content-center">
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <div class="col-12 text-center">
+                    <p class="text-muted">No values added yet. Add some core values in the admin to display them here.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
 
 {% endblock %}

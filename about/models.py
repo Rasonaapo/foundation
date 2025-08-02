@@ -34,7 +34,18 @@ class Value(models.Model):
     class Meta:
         verbose_name = "Value"
         verbose_name_plural = "Values"
-        ordering = ['name']
+        ordering = ['created_at']
 
     def __str__(self):
         return self.name
+
+class Introduction(models.Model):
+    text = models.TextField("Introduction Text")
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name_plural = "Introduction"
+
+    def __str__(self):
+        return self.text[:60]
