@@ -2,9 +2,151 @@
 {% load static %}
 
 
+{% block extra_css %}
+<style>
+.director-img {
+    width: 220px;
+    height: 260px;
+    object-fit: cover;
+    border-radius: 16px; /* optional, for rounded corners */
+    display: block;
+    margin: 0 auto;
+    background: #f3f3f3; /* fallback background */
+}
+</style>
+{% endblock %}
+
 
 {% block content %}
-  {% include 'core/breadcrumb.html' with page_title='board of directors' %}
+  {% include 'core/breadcrumb.html' with page_title=title %}
+      <div class="whole-wrap">
+		<div class="container box_1170">
+            <section class="volunteers_part padding_top single_page_volunteers">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-xl-8">
+                            <div class="section_tittle text-center">
+                                <p>Board of Directors</p>
+                                <h2>Meet Our Management Team</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        {% if management_team %}
+                            {% for director in management_team %}
+                            <div class="col-sm-6 col-lg-3">
+                                <div class="single_blog_item">
+                                    <div class="single_blog_img">
+                                        {% if director.photo %}
+                                            <img src="{{ director.photo.url }}" alt="{{ director.name }}" class="director-img" >
+                                        {% else %}
+                                            {% if director.gender == 'male' %}
+                                                <img src="{% static 'img/male-avatar.png' %}" class="director-img"  alt="Male avatar">
+                                            {% else %}
+                                                <img src="{% static 'img/female-avatar.png' %}" class="director-img"  alt="Female avatar">
+                                            {% endif %}
+                                        {% endif %}
+                                        <div class="social_icon">
+                                            {% if director.facebook_url %}
+                                                <a href="{{ director.facebook_url }}" target="_blank"><i class="ti-facebook"></i></a>
+                                            {% endif %}
+                                            {% if director.twitter_url %}
+                                                <a href="{{ director.twitter_url }}" target="_blank"><i class="ti-twitter-alt"></i></a>
+                                            {% endif %}
+                                            {% if director.instagram_url %}
+                                                <a href="{{ director.instagram_url }}" target="_blank"><i class="ti-instagram"></i></a>
+                                            {% endif %}
+                                            {% if director.skype_url %}
+                                                <a href="{{ director.skype_url }}" target="_blank"><i class="ti-skype"></i></a>
+                                            {% endif %}
+                                            {% if director.linkedin_url %}
+                                                <a href="{{ director.linkedin_url }}" target="_blank"><i class="ti-linkedin"></i></a>
+                                            {% endif %}
+                                            {% if director.youtube_url %}
+                                                <a href="{{ director.youtube_url }}" target="_blank"><i class="ti-youtube"></i></a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="single_text">
+                                        <div class="single_blog_text text-center">
+                                            <h3>{{ director.name }}</h3>
+                                            <p>{{ director.role }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="col-12 text-center my-4">
+                                <p class="text-muted">No management members added yet. Please add members in the admin to display them here.</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </section>
 
+            <!-- Technical Team -->
+            {% if technical_team %}
+             <section class="volunteers_part padding_top single_page_volunteers">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-xl-8">
+                            <div class="section_tittle text-center">
+                                <p>Teachnical Members</p>
+                                <h2>Meet Our Technical Team</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                            {% for director in technical_team %}
+                            <div class="col-sm-6 col-lg-3">
+                                <div class="single_blog_item">
+                                    <div class="single_blog_img">
+                                        {% if director.photo %}
+                                            <img src="{{ director.photo.url }}" alt="{{ director.name }}" class="director-img" >
+                                        {% else %}
+                                            {% if director.gender == 'male' %}
+                                                <img src="{% static 'img/male-avatar.png' %}" class="director-img"  alt="Male avatar">
+                                            {% else %}
+                                                <img src="{% static 'img/female-avatar.png' %}" class="director-img"  alt="Female avatar">
+                                            {% endif %}
+                                        {% endif %}
+                                        <div class="social_icon">
+                                            {% if director.facebook_url %}
+                                                <a href="{{ director.facebook_url }}" target="_blank"><i class="ti-facebook"></i></a>
+                                            {% endif %}
+                                            {% if director.twitter_url %}
+                                                <a href="{{ director.twitter_url }}" target="_blank"><i class="ti-twitter-alt"></i></a>
+                                            {% endif %}
+                                            {% if director.instagram_url %}
+                                                <a href="{{ director.instagram_url }}" target="_blank"><i class="ti-instagram"></i></a>
+                                            {% endif %}
+                                            {% if director.skype_url %}
+                                                <a href="{{ director.skype_url }}" target="_blank"><i class="ti-skype"></i></a>
+                                            {% endif %}
+                                            {% if director.linkedin_url %}
+                                                <a href="{{ director.linkedin_url }}" target="_blank"><i class="ti-linkedin"></i></a>
+                                            {% endif %}
+                                            {% if director.youtube_url %}
+                                                <a href="{{ director.youtube_url }}" target="_blank"><i class="ti-youtube"></i></a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="single_text">
+                                        <div class="single_blog_text text-center">
+                                            <h3>{{ director.name }}</h3>
+                                            <p>{{ director.role }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}    
+                    </div>
+                </div>
+            </section>
+         {% endif %}
+
+        </div>
+    </div>
 
 {% endblock %}

@@ -8,6 +8,9 @@ class BoardListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Board of Directors'
+        context['title'] = 'Team Members'
+        context['management_team'] = Director.objects.filter(team_type='management')
+        context['technical_team'] = Director.objects.filter(team_type='technical')
+      
         return context
 

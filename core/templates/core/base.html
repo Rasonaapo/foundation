@@ -2,6 +2,18 @@
 <!doctype html>
 <html lang="en">
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>
+        {% if title %}
+            {{ title }}
+        {% else %}
+            {% block title %}{% endblock %}
+        {% endif %}
+
+    </title>
+    
+
   <!-- …meta tags… -->
   <link rel="icon" href="{% static 'img/jirag_logo.jpeg' %}">
 

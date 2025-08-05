@@ -8,6 +8,24 @@ class Director(models.Model):
     photo = models.ImageField(upload_to='directors/', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    GENDER_CHOICES = (
+        ('male', 'Male'),
+        ('female', 'Female'),
+    )
+    gender = models.CharField(max_length=10, choices=GENDER_CHOICES, default='male')
+    TEAM_TYPE_CHOICES = (
+        ('management', 'Management'),
+        ('technical', 'Technical'),
+    )
+    team_type = models.CharField(max_length=20, choices=TEAM_TYPE_CHOICES, default='management')
+
+    # add social media links 
+    facebook_url = models.URLField("Facebook URL", blank=True)
+    twitter_url = models.URLField("Twitter URL", blank=True)
+    instagram_url = models.URLField("Instagram URL", blank=True)
+    linkedin_url = models.URLField("LinkedIn URL", blank=True)
+    skype_url = models.URLField("Skype URL", blank=True)
+    youtube_url = models.URLField("YouTube URL", blank=True)
 
     def save(self, *args, **kwargs):
         if self.photo and (not self.pk or self.photo._file):
@@ -17,7 +35,7 @@ class Director(models.Model):
     class Meta:
         verbose_name = "Director"
         verbose_name_plural = "Board of Directors"
-        ordering = ['name']
+        ordering = ['created_at']
 
     def __str__(self):
         return f"{self.name} ({self.role})" if self.role else self.name
