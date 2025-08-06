@@ -2,70 +2,117 @@
 
 {% block extra_css %}
 <style>
-  header.main_menu {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 999;
-    background-color: rgba(0,0,0,0.6);
-  }
-  
-  .banner_part {
-    position: relative;
-    height: 550px; /* adjust height as needed */
-    overflow: hidden;
-    margin-top: 80px; /* Adjust according to your navbar's actual height */
-  }
+header.main_menu {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 999;
+  background-color: rgba(0,0,0,0.6);
+}
 
-  .banner_overlay {
-    position: absolute;
-    top:0; left:0;
-    height:100%; width:100%;
-    background-color: rgba(0,0,0,0.5); /* dark overlay */
-    z-index: 1;
-  }
+.banner_part {
+  position: relative;
+  height: auto;
+  min-height: 550px;
+  overflow: hidden;
+  margin-top: 80px; 
+  padding-bottom: 40px;
+}
 
-  .marquee-bg {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    display: flex; align-items: center;
-    white-space: nowrap;
-    animation: marquee-slide 35s linear infinite;
-  }
+.banner_overlay {
+  position: absolute;
+  top: 0; left: 0;
+  height: 100%; width: 100%;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 1;
+}
 
-  @keyframes marquee-slide {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
+.marquee-img {
+  height: 100%;
+  width: auto;
+  object-fit: cover;
+  border-right: 3px solid rgba(73, 66, 66, 0.5); /* subtle white border */
+}
 
+.marquee-bg {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  animation: marquee-slide 35s linear infinite;
+}
+
+@keyframes marquee-slide {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.marquee-img {
+  height: 100%; width: auto;
+  object-fit: cover;
+}
+
+.banner_text {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.banner_text_iner h1, 
+.banner_text_iner p {
+  color: #fff;
+}
+
+.btn_2 {
+  background: #00cc33;
+  border: none;
+  color: #fff;
+  padding: .75rem 1.5rem;
+  border-radius: 30px;
+  text-transform: uppercase;
+  margin-top: 20px;
+}
+
+@media (max-width:768px) {
+  .banner_part { 
+    height: auto; 
+    min-height: 400px; 
+    padding: 100px 20px;
+  }
   .marquee-img {
-    height: 100%; width: auto;
-    object-fit: cover;
+    height: 100%;
+    min-height: 400px;
   }
-
-  .banner_text {
-    position: relative;
-    z-index: 2;
+  .banner_text_iner h1 { 
+    font-size: 28px; 
   }
-
-  .banner_text_iner h1, .banner_text_iner p {
-    color: #fff;
+  .banner_text_iner p {
+    font-size: 16px;
   }
-
   .btn_2 {
-    background: #00cc33;
-    border: none; color: #fff;
-    padding: .75rem 1.5rem;
-    border-radius: 30px; text-transform: uppercase;
+    padding: .6rem 1.2rem;
+    font-size: 14px;
   }
+}
 
-  @media (max-width:768px) {
-    .banner_part { height:300px; }
-    .marquee-img { height:300px; }
+@media(min-width:992px) {
+  .banner_part { 
+    min-height: 600px; 
+    padding-bottom: 60px;
   }
+}
+
 </style>
 {% endblock %}
+
+
+
 
 {% block banner %}
 <section class="banner_part">

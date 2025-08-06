@@ -6,7 +6,7 @@ from .models import Director
 @admin.register(Director)
 class DirectorAdmin(admin.ModelAdmin):
     list_display = (
-        'name', 'role', 'team_type', 'gender', 'created_at', 'updated_at'
+        'name', 'role', 'team_type', 'gender', 'order', 'created_at', 'updated_at'
     )
     list_filter = ('team_type', 'gender')
     search_fields = ('name', 'role', 'bio')
@@ -14,7 +14,7 @@ class DirectorAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
             'fields': (
-                'name', 'role', 'bio', 'photo', 'team_type', 'gender'
+                'name', 'role', 'bio', 'photo', 'team_type', 'gender', 'order'
             )
         }),
         ('Social Links', {

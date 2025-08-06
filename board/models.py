@@ -14,10 +14,11 @@ class Director(models.Model):
     )
     gender = models.CharField(max_length=10, choices=GENDER_CHOICES, default='male')
     TEAM_TYPE_CHOICES = (
-        ('management', 'Management'),
-        ('technical', 'Technical'),
+        ('trustee', 'Trustee'),
+        ('management', 'Management')
     )
-    team_type = models.CharField(max_length=20, choices=TEAM_TYPE_CHOICES, default='management')
+    team_type = models.CharField(max_length=20, choices=TEAM_TYPE_CHOICES, default='trustee')
+    order = models.PositiveIntegerField(default=0, help_text="Lower numbers show first")
 
     # add social media links 
     facebook_url = models.URLField("Facebook URL", blank=True)
@@ -33,9 +34,9 @@ class Director(models.Model):
         super().save(*args, **kwargs)
 
     class Meta:
-        verbose_name = "Director"
-        verbose_name_plural = "Board of Directors"
-        ordering = ['created_at']
+        verbose_name = "Team Member"
+        verbose_name_plural = "Team Members"
+        ordering = ['order', 'created_at']
 
     def __str__(self):
         return f"{self.name} ({self.role})" if self.role else self.name

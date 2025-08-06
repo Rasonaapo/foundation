@@ -27,7 +27,7 @@ urlpatterns += [
     path('', include('core.urls')),
     path('about/', include('about.urls')),
     path('gallery/', include('media_gallery.urls')),
-    path('team/', include('board.urls')),
+    path('governance/', include('board.urls')),
     path('contact/', include('contact.urls')),
 ]
 

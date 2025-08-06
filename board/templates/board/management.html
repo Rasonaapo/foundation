@@ -31,56 +31,9 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="row">
-                        {% if trustee_ceo %}
-                            <div class="col-sm-6 col-lg-3">
-                                <div class="single_blog_item">
-                                    <div class="single_blog_img">
-                                        {% if trustee_ceo.photo %}
-                                            <img src="{{ trustee_ceo.photo.url }}" alt="{{ trustee_ceo.name }}" class="director-img" >
-                                        {% else %}
-                                            {% if trustee_ceo.gender == 'male' %}
-                                                <img src="{% static 'img/male-avatar.png' %}" class="director-img"  alt="Male avatar">
-                                            {% else %}
-                                                <img src="{% static 'img/female-avatar.png' %}" class="director-img"  alt="Female avatar">
-                                            {% endif %}
-                                        {% endif %}
-                                        <div class="social_icon">
-                                            {% if trustee_ceo.facebook_url %}
-                                                <a href="{{ trustee_ceo.facebook_url }}" target="_blank"><i class="ti-facebook"></i></a>
-                                            {% endif %}
-                                            {% if trustee_ceo.twitter_url %}
-                                                <a href="{{ trustee_ceo.twitter_url }}" target="_blank"><i class="ti-twitter-alt"></i></a>
-                                            {% endif %}
-                                            {% if trustee_ceo.instagram_url %}
-                                                <a href="{{ trustee_ceo.instagram_url }}" target="_blank"><i class="ti-instagram"></i></a>
-                                            {% endif %}
-                                            {% if trustee_ceo.skype_url %}
-                                                <a href="{{ trustee_ceo.skype_url }}" target="_blank"><i class="ti-skype"></i></a>
-                                            {% endif %}
-                                            {% if trustee_ceo.linkedin_url %}
-                                                <a href="{{ trustee_ceo.linkedin_url }}" target="_blank"><i class="ti-linkedin"></i></a>
-                                            {% endif %}
-                                            {% if trustee_ceo.youtube_url %}
-                                                <a href="{{ trustee_ceo.youtube_url }}" target="_blank"><i class="ti-youtube"></i></a>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                    <div class="single_text">
-                                        <div class="single_blog_text text-center">
-                                            <h3>{{ trustee_ceo.name }}</h3>
-                                            <p>{{ trustee_ceo.role }}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        {% endif %}
-                    </div>
-                    
-                    <div class="row" style="margin-top: 20px;">
-                        {% if trustee_members %}
-                            {% for director in trustee_members %}
+                        {% if management_team %}
+                            {% for director in management_team %}
                             <div class="col-sm-6 col-lg-3">
                                 <div class="single_blog_item">
                                     <div class="single_blog_img">
@@ -125,7 +78,7 @@
                             {% endfor %}
                         {% else %}
                             <div class="col-12 text-center my-4">
-                                <p class="text-muted">No trustees members added yet. Please add members in the admin to display them here.</p>
+                                <p class="text-muted">No management members added yet. Please add members in the admin to display them here.</p>
                             </div>
                         {% endif %}
                     </div>
