@@ -1,0 +1,62 @@
+{% extends "core/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<section class="contact-section section_padding">
+  <div class="container">
+
+    <div class="row">
+      <div class="col-12">
+        <h2 class="contact-title">Get in Touch</h2>
+      </div>
+
+      <!-- Contact Form -->
+      <div class="col-lg-8">
+        <form method="post" action="{% url 'contact' %}" class="form-contact contact_form" id="contactForm" novalidate>
+          {% csrf_token %}
+          {{ form|crispy }}
+            <div class="form-group mt-3">
+              <button type="submit" class="button button-contactForm btn_1">Send Message <i class="flaticon-right-arrow"></i> </button>
+            </div>
+
+        </form>
+      </div>
+
+      <!-- Contact Info Right Side -->
+      <div class="col-lg-4">
+
+        {% if address_info %}
+        <div class="media contact-info">
+          <span class="contact-info__icon"><i class="{{ address_info.icon_class }}"></i></span>
+          <div class="media-body">
+            <h3>{{ address_info.title }}</h3>
+            <p>{{ address_info.description }}</p>
+          </div>
+        </div>
+        {% endif %}
+
+        {% if phone_info %}
+        <div class="media contact-info">
+          <span class="contact-info__icon"><i class="{{ phone_info.icon_class }}"></i></span>
+          <div class="media-body">
+            <h3>{{ phone_info.title }}</h3>
+            <p>{{ phone_info.extra_info }}</p>
+          </div>
+        </div>
+        {% endif %}
+
+        {% if email_info %}
+        <div class="media contact-info">
+          <span class="contact-info__icon"><i class="{{ email_info.icon_class }}"></i></span>
+          <div class="media-body">
+            <h3>{{ email_info.title }}</h3>
+            <p>{{ email_info.description }}</p>
+          </div>
+        </div>
+        {% endif %}
+
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
