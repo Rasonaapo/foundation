@@ -1,6 +1,7 @@
 from django.views.generic import ListView
 from .models import GalleryImage
 from django.utils import timezone
+from django.db.models import Q
 
 class GalleryListView(ListView):
     model = GalleryImage
@@ -10,7 +11,8 @@ class GalleryListView(ListView):
     def get_queryset(self):
         today = timezone.now().date()
         return GalleryImage.objects.filter(
-            expires_at__isnull=True
-        ) | GalleryImage.objects.filter(
-            expires_at__gte=today
+            archived=False,
+        ).filter(
+            Q(expires_at__isnull=True) | Q(expires_at__gte=today)
         )
+

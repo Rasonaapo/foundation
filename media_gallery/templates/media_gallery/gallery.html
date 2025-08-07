@@ -1,10 +1,45 @@
 {% extends 'core/base.html' %}
 {% load static %}
 
+{% load gallery_extras %}
 
 
 {% block content %}
   {% include 'core/breadcrumb.html' with page_title='gallery' %}
+   <div class="whole-wrap">
+		<div class="container box_1170">
 
+<div class="section-top-border">
+  <h3>Image Gallery</h3>
+  <div class="row gallery-item">
+    {% for row in images|gallery_rows %}
+      {% if forloop.counter|divisibleby:2 %}
+        {# Even row: 2 images, col-md-6 #}
+        {% for image in row %}
+          <div class="col-md-6 mb-4">
+            <a href="{{ image.image.url }}" class="img-pop-up">
+              <div class="single-gallery-image" style="background: url({{ image.image.url }});"></div>
+            </a>
+          </div>
+        {% endfor %}
+      {% else %}
+        {# Odd row: 3 images, col-md-4 #}
+        {% for image in row %}
+          <div class="col-md-4 mb-4">
+            <a href="{{ image.image.url }}" class="img-pop-up">
+              <div class="single-gallery-image" style="background: url({{ image.image.url }});"></div>
+            </a>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+
+
+    </div>
+   </div>
+    
 
 {% endblock %}

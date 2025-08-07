@@ -7,6 +7,7 @@ class GalleryImage(models.Model):
     expires_at = models.DateField(null=True, blank=True, help_text="Date to remove/hide image (optional)")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    archived = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         # Resize only on new upload or changed file

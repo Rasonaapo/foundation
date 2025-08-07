@@ -3,7 +3,8 @@ from . models import GalleryImage, MarqueeImage
 # Register your models here.
 
 class GalleryImageAdmin(admin.ModelAdmin):
-    list_display = ('image', 'caption', 'expires_at', 'created_at', 'updated_at')
+    list_display = ('image', 'caption', 'archived', 'expires_at', 'created_at', 'updated_at')
+    list_filter = ('expires_at', 'archived', 'created_at')
     search_fields = ('caption',)
     ordering = ('-created_at',)
 
