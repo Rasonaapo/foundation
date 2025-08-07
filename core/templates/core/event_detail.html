@@ -1,0 +1,183 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block content %}
+<section class="blog_area single-post-area section_padding">
+  <div class="container">
+    <div class="row">
+
+      <!-- Main event post -->
+      <div class="col-lg-8 posts-list">
+        <div class="single-post">
+          <div class="feature-img">
+            <img class="img-fluid" src="{{ event.photo.url }}" alt="{{ event.title }}">
+          </div>
+          <div class="blog_details">
+            <h2>{{ event.title }}</h2>
+            <ul class="blog-info-link mt-3 mb-4">
+              <li>
+                <a href="#">
+                  <i class="far fa-user"></i>
+                  {% for cat in event.categories.all %}
+                    {{ cat.name }}{% if not forloop.last %}, {% endif %}
+                  {% endfor %}
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <i class="far fa-comments"></i> 0 Comments
+                </a>
+              </li>
+            </ul>
+
+            <!-- Assuming event.content contains rich text or plain text -->
+            <p class="excert">{{ event.content|linebreaks }}</p>
+          </div>
+        </div>
+
+        <!-- Navigation - optionally implement prev/next logic in view -->
+        <div class="navigation-top">
+          <!-- You can add logic here if you want prev/next events navigation -->
+        </div>
+
+        <!-- Author info - you can customize this or remove if not needed -->
+        <div class="blog-author">
+          <div class="media align-items-center">
+            <img src="{% static 'img/blog/author.png' %}" alt="Author">
+            <div class="media-body">
+              <a href="#">
+                <h4>Jirag Lina Por Foundation</h4>
+              </a>
+              <p>Committed to empowering communities through education, health, and cultural heritage.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Comments Section Placeholder -->
+        <div class="comments-area">
+          <h4>Comments</h4>
+          <p>No comments yet. You can implement comments with Django or third-party apps like Disqus.</p>
+        </div>
+
+        <!-- Comment Form Placeholder -->
+        <div class="comment-form">
+          <h4>Leave a Reply</h4>
+          <form method="post" action="#">
+            {% csrf_token %}
+            <div class="row">
+              <div class="col-12">
+                <div class="form-group">
+                  <textarea class="form-control w-100" name="comment" id="comment" cols="30" rows="9" placeholder="Write Comment"></textarea>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <input class="form-control" name="name" id="name" type="text" placeholder="Name">
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <input class="form-control" name="email" id="email" type="email" placeholder="Email">
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="form-group">
+                  <input class="form-control" name="website" id="website" type="text" placeholder="Website">
+                </div>
+              </div>
+            </div>
+            <div class="form-group mt-3">
+              <button type="submit" class="button button-contactForm btn_1">Send Message <i class="flaticon-right-arrow"></i></button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="col-lg-4">
+        <div class="blog_right_sidebar">
+
+          <!-- Search Widget -->
+          <aside class="single_sidebar_widget search_widget">
+            <form method="get" action="{% url 'home' %}">
+              <div class="form-group">
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" name="q" placeholder="Search Keyword" onfocus="this.placeholder=''" onblur="this.placeholder='Search Keyword'">
+                  <div class="input-group-append">
+                    <button class="btn" type="submit"><i class="ti-search"></i></button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </aside>
+
+          <!-- Categories Widget -->
+          <aside class="single_sidebar_widget post_category_widget">
+            <h4 class="widget_title">Categories</h4>
+            <ul class="list cat-list">
+              {% for category in categories %}
+                <li>
+                  <a href="#" class="d-flex">
+                    <p>{{ category.name }}</p>
+                    <p>({{ category.events.count }})</p>
+                  </a>
+                </li>
+              {% empty %}
+                <li>No categories found.</li>
+              {% endfor %}
+            </ul>
+          </aside>
+
+          <!-- Most Trending Widget -->
+          <aside class="single_sidebar_widget popular_post_widget">
+            <h3 class="widget_title">Most Trending</h3>
+            {% if most_trending %}
+              {% for trending in most_trending %}
+                <div class="media post_item">
+                  {% if trending.photo %}
+                    <img src="{{ trending.photo.url }}" alt="{{ trending.title }}" class="mr-3" style="width: 60px; height: 60px;">
+                  {% endif %}
+                  <div class="media-body">
+                    <a href="{{ trending.url }}" target="_blank" rel="noopener noreferrer">
+                      <h3>{{ trending.title }}</h3>
+                    </a>
+                    <p>{{ trending.created_at|date:"M d, Y" }}</p>
+                  </div>
+                </div>
+              {% endfor %}
+            {% else %}
+              <p>No trending items available.</p>
+            {% endif %}
+          </aside>
+
+          <!-- Tag Cloud Widget -->
+          <aside class="single_sidebar_widget tag_cloud_widget">
+            <h4 class="widget_title">Tag Clouds</h4>
+            <ul class="list">
+              {% for category in categories %}
+                <li><a href="#">{{ category.name }}</a></li>
+              {% empty %}
+                <li>No tags found.</li>
+              {% endfor %}
+            </ul>
+          </aside>
+
+          <!-- Newsletter Widget -->
+          <aside class="single_sidebar_widget newsletter_widget">
+            <h4 class="widget_title">Newsletter</h4>
+            <form method="post" action="#">
+              {% csrf_token %}
+              <div class="form-group">
+                <input type="email" class="form-control" name="email" placeholder="Enter email" required>
+              </div>
+              <button class="button rounded-0 primary-bg text-white w-100 btn_1" type="submit">Subscribe</button>
+            </form>
+          </aside>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -150,4 +150,108 @@ header.main_menu {
 
 {% block content %}
 
+<section class="blog_area section_padding">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 mb-5 mb-lg-0">
+        <div class="blog_left_sidebar">
+
+          {% if events %}
+            {% for event in events %}
+              <article class="blog_item">
+                <div class="blog_item_img">
+                  <img class="card-img rounded-0" src="{{ event.photo.url }}" alt="{{ event.title }}">
+                  <a href="{{ event.get_absolute_url }}" class="blog_item_date">
+                    <h3>{{ event.event_date|date:"d" }}</h3>
+                    <p>{{ event.event_date|date:"M" }}</p>
+                  </a>
+                </div>
+
+                <div class="blog_details">
+                  <a class="d-inline-block" href="{{ event.get_absolute_url }}">
+                    <h2>{{ event.title }}</h2>
+                  </a>
+                  <p>{{ event.content|truncatewords:30 }}</p>
+                  <ul class="blog-info-link">
+                    <li>
+                      <a href="#">
+                        <i class="far fa-user"></i>
+                        {% for cat in event.categories.all %}
+                          {{ cat.name }}{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <i class="far fa-comments"></i>
+                        <!-- You can put comment count here if implemented -->
+                        0 Comments
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </article>
+            {% endfor %}
+          {% else %}
+            <h2 class="text-center" style="color:green">Stay tuned for upcoming events!</h2>
+          {% endif %}
+
+          <!-- Pagination placeholder if needed -->
+          <!--
+          <nav class="blog-pagination justify-content-center d-flex">
+            <ul class="pagination">
+              <li class="page-item">
+                <a href="#" class="page-link" aria-label="Previous">
+                  <i class="ti-angle-left"></i>
+                </a>
+              </li>
+              <li class="page-item active">
+                <a href="#" class="page-link">1</a>
+              </li>
+              <li class="page-item">
+                <a href="#" class="page-link" aria-label="Next">
+                  <i class="ti-angle-right"></i>
+                </a>
+              </li>
+            </ul>
+          </nav>
+          -->
+        </div>
+      </div>
+
+      <!-- Sidebar: you can integrate Most Trending, Categories, Newsletter here as needed -->
+      <div class="col-lg-4">
+        <div class="blog_right_sidebar">
+
+          <!-- Example: Most Trending widget -->
+          <aside class="single_sidebar_widget popular_post_widget">
+            <h3 class="widget_title">Most Trending</h3>
+            {% if most_trending %}
+              {% for trending in most_trending %}
+                <div class="media post_item">
+                  {% if trending.photo %}
+                    <img src="{{ trending.photo.url }}" alt="{{ trending.title }}" class="mr-3" style="width: 60px; height: 60px;">
+                  {% endif %}
+                  <div class="media-body">
+                    <a href="{{ trending.url }}" target="_blank" rel="noopener noreferrer">
+                      <h3>{{ trending.title }}</h3>
+                    </a>
+                    <p>{{ trending.created_at|date:"M d, Y" }}</p>
+                  </div>
+                </div>
+              {% endfor %}
+            {% else %}
+              <p>No trending items at the moment.</p>
+            {% endif %}
+          </aside>
+
+          <!-- Other widgets you can include similarly: Categories, Newsletter -->
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
 {% endblock %}

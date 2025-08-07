@@ -182,3 +182,4 @@ class MostTrending(models.Model):
         verbose_name_plural = "Most Trending"
         ordering = ['-created_at']
     
+
