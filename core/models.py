@@ -1,5 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.utils.text import slugify
+from django.urls import reverse
+from .utils import resize_image
 
 # Create your models here.
 class CustomUserManager(BaseUserManager):
@@ -86,3 +89,96 @@ class Footer(models.Model):
         verbose_name = "Footer"
         verbose_name_plural = "Footer"
         ordering = ['-created_at']
+
+class Category(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    slug = models.SlugField(max_length=100, unique=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+        verbose_name = "Category"
+        verbose_name_plural = "Categories"
+        ordering = ['name']
+    
+class Event(models.Model):
+    title = models.CharField(max_length=200)
+    slug = models.SlugField(max_length=200, unique=True, blank=True)
+    content = models.TextField()
+    photo = models.ImageField(upload_to='events/')
+    event_date = models.DateField()
+    expiry_date = models.DateField(null=True, blank=True, verbose_name="Expiry Date", help_text="Date after which event is archived and hidden from display")
+    categories = models.ManyToManyField(Category, related_name='events')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    archived = models.BooleanField(default=False)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        # Automatically archive event if expiry_date passed
+        from django.utils import timezone
+        if self.expiry_date and self.expiry_date < timezone.now().date():
+            self.archived = True
+        # Resize the image if it exists
+        if self.photo and (not self.pk or self.photo._file):
+            self.photo = resize_image(self.photo, max_width=600, max_height=400)
+
+        super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('event_detail', kwargs={'slug': self.slug})
+
+    def __str__(self):
+        return self.title
+    
+    class Meta:
+        verbose_name = "Event"
+        verbose_name_plural = "Events"
+        ordering = ['-event_date', '-created_at']
+    
+
+class MostTrending(models.Model):
+    title = models.CharField(max_length=200)
+    url = models.URLField(help_text="URL to the trending post/video/article")
+    slug = models.SlugField(max_length=200, unique=True, blank=True)
+    excerpt = models.TextField(blank=True)
+    photo = models.ImageField(upload_to='most_trending/', blank=True, null=True)
+    expiry_date = models.DateField(null=True, blank=True, verbose_name="Expiry Date", help_text="Date after which event is archived and hidden from display")
+    archived = models.BooleanField(default=False)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        # Resize the image if it exists
+        if self.photo and (not self.pk or self.photo._file):
+            self.photo = resize_image(self.photo, max_width=600, max_height=400)
+
+        # Automatically archive trending if expiry_date passed
+        from django.utils import timezone
+        if self.expiry_date and self.expiry_date < timezone.now().date():
+            self.archived = True
+        super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        # Returns the external URL directly since it points to external media
+        return self.url
+
+    def __str__(self):
+        return self.title
+    
+    class Meta:
+        verbose_name = "Most Trending"
+        verbose_name_plural = "Most Trending"
+        ordering = ['-created_at']
+    
