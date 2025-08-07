@@ -1,6 +1,6 @@
 # JiraJinapor Foundation LBG Website
 
-A modular, CMS-ready website for the Jiraj Lina Por Foundation, built with Django and Bootstrap.  
+A modular, CMS-ready website for the JiraJinapor Foundation LBG, built with Django and Bootstrap.  
 Empowering communities through education, health initiatives, and preservation of cultural heritage.
 
 ---
@@ -97,7 +97,7 @@ jirajlinaporfoundation/
 ## 📸 Assets
 
 - Bootstrap template: [Bcharity by Colorlib](https://colorlib.com/wp/template/bcharity/)
-- Images, logo, and content provided by the Jiraj Lina Por Foundation
+- Images, logo, and content provided by the JiraJinapor Foundation LBG
 
 ---
 
@@ -116,6 +116,6 @@ This project is licensed under the MIT License – see [LICENSE](LICENSE) for de
 ## 🙏 Credits
 
 - Project initiated by Fredrick Tachie Mensah (originalpastorfred@gmail.com)
-- Designed and built for the [Jiraj Lina Por Foundation](http://jirajlinaporfoundation.org)
+- Designed and built for the [JiraJinapor Foundation LBG](http://jirajlinaporfoundation.org)
 - Website template by [Colorlib](https://colorlib.com/)
 - Content, images, and board member profiles provided by the Foundation’s team
