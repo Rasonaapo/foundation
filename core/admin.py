@@ -44,6 +44,17 @@ class MostTrendingAdmin(admin.ModelAdmin):
     search_fields = ('title', 'url')
     prepopulated_fields = {'slug': ('title',)}
 
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('name', 'event', 'created_on', 'active', 'parent')
+    list_filter = ('active', 'created_on')
+    search_fields = ('name', 'email', 'body')
+    actions = ['approve_comments']
+
+    def approve_comments(self, request, queryset):
+        queryset.update(active=True)
+    approve_comments.short_description = "Approve selected comments"
+    
 admin.site.register(MostTrending, MostTrendingAdmin)
 admin.site.register(Event, EventAdmin)
 admin.site.register(CustomUser, CustomUserAdmin) 

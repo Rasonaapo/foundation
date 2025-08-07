@@ -1,17 +1,24 @@
 {% extends "core/base.html" %}
 {% load static %}
+{% load crispy_forms_tags %}
+
+
 
 {% block content %}
 <section class="blog_area single-post-area section_padding">
   <div class="container">
     <div class="row">
 
-      <!-- Main event post -->
+      <!-- Main event content and comments -->
       <div class="col-lg-8 posts-list">
         <div class="single-post">
+
+          <!-- Event Image -->
           <div class="feature-img">
             <img class="img-fluid" src="{{ event.photo.url }}" alt="{{ event.title }}">
           </div>
+
+          <!-- Event Details -->
           <div class="blog_details">
             <h2>{{ event.title }}</h2>
             <ul class="blog-info-link mt-3 mb-4">
@@ -25,69 +32,79 @@
               </li>
               <li>
                 <a href="#">
-                  <i class="far fa-comments"></i> 0 Comments
+                  <i class="far fa-comments"></i> {{ comments.count }} Comment{{ comments.count|pluralize }}
                 </a>
               </li>
             </ul>
 
-            <!-- Assuming event.content contains rich text or plain text -->
             <p class="excert">{{ event.content|linebreaks }}</p>
           </div>
         </div>
 
-        <!-- Navigation - optionally implement prev/next logic in view -->
-        <div class="navigation-top">
-          <!-- You can add logic here if you want prev/next events navigation -->
-        </div>
+        <!-- Comments Listing -->
+        <div class="comments-area mt-5">
+          <h4>{{ comments.count }} Comment{{ comments.count|pluralize }}</h4>
 
-        <!-- Author info - you can customize this or remove if not needed -->
-        <div class="blog-author">
-          <div class="media align-items-center">
-            <img src="{% static 'img/blog/author.png' %}" alt="Author">
-            <div class="media-body">
-              <a href="#">
-                <h4>Jirag Lina Por Foundation</h4>
-              </a>
-              <p>Committed to empowering communities through education, health, and cultural heritage.</p>
+          {% for comment in comments %}
+          <div class="comment-list">
+            <div class="single-comment justify-content-between d-flex">
+              <div class="user justify-content-between d-flex">
+                <div class="thumb">
+                  <img src="{% static 'img/comment/comment_1.png' %}" alt="{{ comment.name }}">
+                </div>
+                <div class="desc">
+                  <p class="comment">{{ comment.body|linebreaks }}</p>
+                  <div class="d-flex justify-content-between">
+                    <div class="d-flex align-items-center">
+                      <h5><a href="#">{{ comment.name }}</a></h5>
+                      <p class="date">{{ comment.created_on|date:"F d, Y \\a\\t h:i a" }}</p>
+                    </div>
+                    <div class="reply-btn">
+                      <a href="javascript:void(0);" class="btn-reply text-uppercase" data-commentid="{{ comment.id }}">reply</a>
+                    </div>
+                  </div>
+
+                  <!-- Replies -->
+                  {% for reply in comment.children %}
+                  <div class="comment-list left-padding">
+                    <div class="single-comment justify-content-between d-flex">
+                      <div class="user justify-content-between d-flex">
+                        <div class="thumb">
+                          <img src="{% static 'img/comment/comment_2.png' %}" alt="{{ reply.name }}">
+                        </div>
+                        <div class="desc">
+                          <p class="comment">{{ reply.body|linebreaks }}</p>
+                          <div class="d-flex justify-content-between">
+                            <div class="d-flex align-items-center">
+                              <h5><a href="#">{{ reply.name }}</a></h5>
+                              <p class="date">{{ reply.created_on|date:"F d, Y \\a\\t h:i a" }}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {% endfor %}
+
+                </div>
+              </div>
             </div>
           </div>
+          {% empty %}
+            <p>No comments yet. Be the first to comment!</p>
+          {% endfor %}
         </div>
 
-        <!-- Comments Section Placeholder -->
-        <div class="comments-area">
-          <h4>Comments</h4>
-          <p>No comments yet. You can implement comments with Django or third-party apps like Disqus.</p>
-        </div>
-
-        <!-- Comment Form Placeholder -->
-        <div class="comment-form">
+        <!-- Comment Form -->
+        <div class="comment-form mt-5">
           <h4>Leave a Reply</h4>
-          <form method="post" action="#">
+          <form method="post" action="{{ event.get_absolute_url }}" class="form-contact comment_form" id="commentForm">
             {% csrf_token %}
-            <div class="row">
-              <div class="col-12">
-                <div class="form-group">
-                  <textarea class="form-control w-100" name="comment" id="comment" cols="30" rows="9" placeholder="Write Comment"></textarea>
-                </div>
-              </div>
-              <div class="col-sm-6">
-                <div class="form-group">
-                  <input class="form-control" name="name" id="name" type="text" placeholder="Name">
-                </div>
-              </div>
-              <div class="col-sm-6">
-                <div class="form-group">
-                  <input class="form-control" name="email" id="email" type="email" placeholder="Email">
-                </div>
-              </div>
-              <div class="col-12">
-                <div class="form-group">
-                  <input class="form-control" name="website" id="website" type="text" placeholder="Website">
-                </div>
-              </div>
-            </div>
+            {{ comment_form|crispy }}
+            <input type="hidden" name="parent_id" id="parent_id" value="">
+
             <div class="form-group mt-3">
-              <button type="submit" class="button button-contactForm btn_1">Send Message <i class="flaticon-right-arrow"></i></button>
+                <button type="submit" class="button button-contactForm btn_1">Send Message <i class="flaticon-right-arrow"></i> </button>
             </div>
           </form>
         </div>
@@ -180,4 +197,20 @@
     </div>
   </div>
 </section>
+
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  // Reply button JS to set parent_id hidden field
+  document.querySelectorAll('.btn-reply').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const commentId = this.getAttribute('data-commentid');
+      document.getElementById('parent_id').value = commentId;
+      document.getElementById('comment').focus();
+      window.scrollTo({ top: document.getElementById('commentForm').offsetTop - 100, behavior: 'smooth' });
+    });
+  });
+</script>
 {% endblock %}

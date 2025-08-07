@@ -183,3 +183,26 @@ class MostTrending(models.Model):
         ordering = ['-created_at']
     
 
+class Comment(models.Model):
+    event = models.ForeignKey('Event', on_delete=models.CASCADE, related_name='comments')
+    parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE, related_name='replies')
+    name = models.CharField(max_length=80)
+    email = models.EmailField()
+    website = models.URLField(blank=True)
+    body = models.TextField()
+    created_on = models.DateTimeField(auto_now_add=True)
+    active = models.BooleanField(default=True)  # You can use this for moderation
+
+    class Meta:
+        ordering = ['created_on']
+
+    def __str__(self):
+        return f'Comment by {self.name} on {self.event}'
+
+    def children(self):
+        # Returns replies to this comment
+        return Comment.objects.filter(parent=self, active=True)
+
+    @property
+    def is_parent(self):
+        return self.parent is None
