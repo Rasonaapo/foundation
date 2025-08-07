@@ -1,4 +1,4 @@
-# Jiraj Lina Por Foundation Website
+# JiraJinapor Foundation LBG Website
 
 A modular, CMS-ready website for the Jiraj Lina Por Foundation, built with Django and Bootstrap.  
 Empowering communities through education, health initiatives, and preservation of cultural heritage.
